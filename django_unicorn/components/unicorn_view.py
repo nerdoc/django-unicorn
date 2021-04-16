@@ -326,6 +326,15 @@ class UnicornView(TemplateView):
 
         return rendered_component
 
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Called by the `as_view` class method when utilizing a component directly as a view.
+        """
+
+        return self.render_to_response(
+            context=self.get_context_data(), component=self, init_js=True,
+        )
+
     @timed
     def get_frontend_context_variables(self) -> str:
         """
